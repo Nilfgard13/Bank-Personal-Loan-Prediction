@@ -1,0 +1,19 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# React
+node_modules/
+
+# VSCode
+.vscode/
+
+# Environment
+.env
+
+# Model besar (opsional)
+*.joblib
