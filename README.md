@@ -1,139 +1,303 @@
 <div align="center">
 
 # 🏦 Bank Personal Loan Acceptance Prediction
-### Machine Learning Classification using Support Vector Machine (Kernel RBF)
+
+### End-to-End Machine Learning Application using Custom Kernel Support Vector Machine (RBF), FastAPI, and React
 
 <p align="center">
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115-green?logo=fastapi)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
-![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-ML-orange?logo=scikitlearn)
-![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?logo=pandas)
-![NumPy](https://img.shields.io/badge/NumPy-Numerical-blue?logo=numpy)
+![Machine Learning](https://img.shields.io/badge/Machine-Learning-orange)
+![SVM](https://img.shields.io/badge/Kernel-SVM-red)
 ![License](https://img.shields.io/badge/License-MIT-success)
 
 </p>
 
-Predict whether a bank customer is likely to accept a personal loan offer using a **Support Vector Machine (Kernel RBF)** classification model with **SMOTE**, **StandardScaler**, **PCA**, **FastAPI**, and **React**.
-
----
+An end-to-end Machine Learning application for predicting whether a customer will accept a personal loan offer using a **custom implementation of Kernel Support Vector Machine (RBF)**, deployed with **FastAPI** and integrated into a modern **React** web application.
 
 </div>
 
+---
+
+# 📸 Proof of Concept
+
+This section demonstrates the complete workflow of the Personal Loan Prediction application, from user interaction to prediction results.
+
+## 1. Landing Page
+
+The application starts with a responsive landing page that introduces the Personal Loan Prediction system and provides access to the prediction feature.
+
+> 📷 **Insert Screenshot**
+>
+![Landing Page](docs/images/homepage.png)
+
+---
+
+## 2. Customer Information Form
+
+Users provide customer information through an intuitive input form.
+
+The required features include:
+
+- Age
+- Experience
+- Income
+- Family
+- Credit Card Average Spending (CCAvg)
+- Education
+- Mortgage
+- Securities Account
+- CD Account
+- Online Banking
+- Credit Card
+
+> 📷 **Insert Screenshot**
+>
+![Input Form](docs/images/input-form.png)
+
+---
+
+## 3. Prediction Result
+
+After submitting the form, the application sends the data to the FastAPI backend.
+
+The backend executes the complete inference pipeline:
+
+```text
+Input Features
+        │
+        ▼
+StandardScaler
+        │
+        ▼
+PCA
+        │
+        ▼
+Kernel SVM (RBF)
+        │
+        ▼
+Prediction Result
+```
+
+The predicted class and decision score are then returned to the frontend and displayed to the user.
+
+> 📷 **Insert Screenshot**
+>
+![Prediction Result](docs/images/prediction-result.png)
+![Prediction Result](docs/images/prediction-result-1.png)
+
+---
+
+## 4. REST API Testing
+
+The prediction service is exposed through a FastAPI REST API.
+
+Interactive API documentation is automatically generated using Swagger UI, allowing developers to test endpoints directly from the browser.
+
+Endpoint:
+
+```http
+POST /predict
+```
+
+> 📷 **Insert Screenshot**
+>
+![Swagger API](docs/images/swagger-api.png)
+
+---
+
+## 5. PCA Visualization
+
+Principal Component Analysis (PCA) is applied to transform standardized features into a lower-dimensional representation for model training and visualization.
+
+The figure below illustrates the projected data distribution after preprocessing.
+
+> 📷 **Insert Screenshot**
+>
+![PCA Visualization](docs/images/pca-visualization.png)
+![PCA Visualization](docs/images/pca-visualization-1.png)
+
+---
+
+## 6. Decision Boundary
+
+The following visualization illustrates the decision boundary learned by the custom Kernel Support Vector Machine using the first two principal components.
+
+It demonstrates how the model separates customers who are likely to accept a personal loan from those who are not.
+
+> 📷 **Insert Screenshot**
+>
+![Decision Boundary](docs/images/decision-boundary.png)
+
+---
+
+# 🎬 Application Workflow
+
+```mermaid
+flowchart LR
+
+A[Open Web Application]
+
+-->B[Input Customer Data]
+
+-->C[Submit Form]
+
+-->D[FastAPI Backend]
+
+-->E[StandardScaler]
+
+-->F[PCA]
+
+-->G[Custom Kernel SVM]
+
+-->H[Prediction Result]
+
+-->I[Display Result]
+```
+
+---
+
+## ✨ End-to-End Workflow Summary
+
+| Step | Description |
+|------|-------------|
+| 1 | User opens the web application |
+| 2 | User fills in customer information |
+| 3 | React sends a prediction request to FastAPI |
+| 4 | FastAPI preprocesses the data using StandardScaler |
+| 5 | PCA transforms the standardized features |
+| 6 | The transformed features are classified using the Custom Kernel SVM (RBF) |
+| 7 | The prediction result is returned to the frontend and displayed to the user |
+
+---
+
+---
+
 # 📖 Table of Contents
 
-- [Project Overview](#-project-overview)
-- [Business Problem](#-business-problem)
-- [Objectives](#-objectives)
-- [Project Architecture](#-project-architecture)
-- [Technology Stack](#-technology-stack)
-- [Dataset Information](#-dataset-information)
-- [Dataset Features](#-dataset-features)
-- [Exploratory Data Analysis](#-exploratory-data-analysis)
-- [Data Preprocessing](#-data-preprocessing)
-- [Machine Learning Pipeline](#-machine-learning-pipeline)
-- [Model Evaluation](#-model-evaluation)
-- [Decision Boundary Visualization](#-decision-boundary-visualization)
-- [Web Application](#-web-application)
-- [REST API](#-rest-api)
-- [Proof of Concept](#-proof-of-concept)
-- [Project Structure](#-project-structure)
-- [Installation](#-installation)
-- [Future Improvements](#-future-improvements)
-- [Author](#-author)
+- Project Overview
+- Why This Project?
+- Business Problem
+- Objectives
+- Key Features
+- Technology Stack
+- System Architecture
+- Dataset
+- Exploratory Data Analysis
+- Data Preprocessing
+- Manual SMOTE
+- StandardScaler
+- Principal Component Analysis
+- Custom Kernel SVM
+- Model Evaluation
+- Deployment
+- REST API
+- Proof of Concept
+- Installation
+- Project Structure
+- Future Improvements
+- Author
 
 ---
 
 # 📖 Project Overview
 
-Financial institutions continuously offer personal loan products to their customers.
+Financial institutions continuously market personal loan products to existing customers.
 
-However, offering loans indiscriminately increases marketing costs because only a small percentage of customers actually accept the offer.
+However, offering loans to every customer is expensive and inefficient because only a small proportion of customers are actually interested in accepting the offer.
 
-This project develops a Machine Learning classification model capable of predicting whether a customer is likely to accept a personal loan offer based on demographic, financial, and banking information.
+This project develops an end-to-end Machine Learning application capable of predicting whether a customer is likely to accept a personal loan offer based on demographic, financial, and banking-related information.
 
-The prediction model is deployed as a REST API using FastAPI and integrated into a modern React-based web application.
+Unlike many similar projects that directly rely on Scikit-Learn's `SVC`, this project implements the **Kernel Support Vector Machine algorithm manually**, including kernel computation, optimization, prediction, and deployment.
 
----
-
-# 🎯 Business Problem
-
-Only **9.6%** of customers in the dataset accepted the personal loan offer.
-
-This severe class imbalance makes traditional machine learning models biased toward the majority class.
-
-The project addresses this issue by applying:
-
-- SMOTE (Synthetic Minority Oversampling Technique)
-- StandardScaler
-- Principal Component Analysis (PCA)
-- Support Vector Machine with RBF Kernel
-
-to improve the model's capability in identifying potential customers.
+The trained model is serialized into a Pickle artifact and served through a FastAPI REST API, while the frontend is implemented using React to provide an interactive prediction interface.
 
 ---
 
-# 🎯 Objectives
+# ⭐ Why This Project?
 
-- Analyze customer financial behavior.
-- Handle class imbalance using SMOTE.
-- Build an SVM classifier with RBF Kernel.
-- Evaluate model performance using multiple metrics.
-- Deploy the model with FastAPI.
-- Build an interactive prediction interface using React.
-- Demonstrate an end-to-end Machine Learning deployment workflow.
+Most Machine Learning portfolio projects stop after model training.
+
+This project goes beyond that by implementing a complete machine learning workflow, including:
+
+- Custom implementation of Kernel Support Vector Machine
+- Manual implementation of SMOTE for handling imbalanced data
+- Data preprocessing using StandardScaler
+- Feature transformation using PCA
+- Model serialization using Pickle
+- Custom Unpickler for loading trained models
+- REST API deployment using FastAPI
+- Interactive frontend using React
+- End-to-end prediction pipeline
+
+This repository demonstrates both **Machine Learning Engineering** and **Backend Development** skills.
 
 ---
 
-# 🏗 Project Architecture
+# 💼 Business Problem
 
-```text
-                Dataset
-                   │
-                   ▼
-        Exploratory Data Analysis
-                   │
-                   ▼
-         Data Preprocessing
-                   │
-      ┌────────────┴────────────┐
-      │                         │
-      ▼                         ▼
- StandardScaler             SMOTE
-      │                         │
-      └────────────┬────────────┘
-                   ▼
-                  PCA
-                   │
-                   ▼
-          Kernel SVM (RBF)
-                   │
-                   ▼
-          Model Evaluation
-                   │
-                   ▼
-           Pickle (.pkl)
-                   │
-                   ▼
-              FastAPI API
-                   │
-                   ▼
-             React Frontend
-```
+The original dataset contains **5,000 bank customers**, but only **480 customers (9.6%)** accepted the personal loan offer.
+
+This creates a highly imbalanced classification problem where a conventional classifier tends to favor the majority class.
+
+For financial institutions, failing to identify potential customers means:
+
+- Higher marketing costs
+- Lower campaign effectiveness
+- Lost business opportunities
+- Reduced conversion rates
+
+Therefore, an accurate classification model is required to identify customers with a high probability of accepting a personal loan.
+
+---
+
+# 🎯 Project Objectives
+
+The primary objectives of this project are:
+
+- Analyze customer financial data.
+- Explore customer characteristics through statistical analysis.
+- Handle class imbalance using a manually implemented SMOTE algorithm.
+- Reduce feature scale differences using StandardScaler.
+- Transform high-dimensional data using PCA.
+- Develop a custom Kernel Support Vector Machine classifier.
+- Evaluate model performance using multiple classification metrics.
+- Deploy the trained model using FastAPI.
+- Build an interactive web application using React.
+
+---
+
+# ✨ Key Features
+
+- 📊 Exploratory Data Analysis (EDA)
+- 📈 Statistical Data Analysis
+- ⚖️ Manual SMOTE Implementation
+- 📏 StandardScaler
+- 📉 Principal Component Analysis (PCA)
+- 🧠 Custom Kernel Support Vector Machine (RBF)
+- 📦 Pickle Model Serialization
+- 🔄 Custom Pickle Loader (KernelSVMUnpickler)
+- 🚀 FastAPI Deployment
+- 💻 React Frontend
+- 📚 Interactive Swagger Documentation
+- ⚡ Real-Time Loan Prediction
 
 ---
 
 # 🛠 Technology Stack
 
 | Category | Technology |
-|------------|------------|
-| Language | Python |
-| Machine Learning | Scikit-Learn |
+|----------|------------|
+| Programming Language | Python |
+| Machine Learning | Custom Kernel SVM |
 | Data Processing | Pandas |
 | Numerical Computing | NumPy |
-| Visualization | Matplotlib |
-| API | FastAPI |
+| Data Preprocessing | StandardScaler |
+| Dimensionality Reduction | PCA |
+| Imbalanced Learning | Manual SMOTE |
+| API Framework | FastAPI |
 | Frontend | React + Vite |
 | Styling | Tailwind CSS |
 | Model Serialization | Pickle |
@@ -141,69 +305,185 @@ to improve the model's capability in identifying potential customers.
 
 ---
 
-# 📊 Dataset Information
+# 🏗 System Architecture
 
-Dataset Source
+```text
+                          Customer Dataset
+                                  │
+                                  ▼
+                  Exploratory Data Analysis (EDA)
+                                  │
+                                  ▼
+                        Train - Test Split
+                                  │
+                                  ▼
+                 Manual SMOTE (Training Set Only)
+                                  │
+                                  ▼
+                         StandardScaler
+                                  │
+                                  ▼
+                   Principal Component Analysis
+                                  │
+                                  ▼
+                    Select Principal Components
+                                  │
+                                  ▼
+                 Custom Kernel Support Vector Machine
+                                  │
+                                  ▼
+                        Model Evaluation
+                                  │
+                                  ▼
+                     Pickle Model Serialization
+                                  │
+                                  ▼
+                    Custom KernelSVMUnpickler
+                                  │
+                                  ▼
+                           FastAPI Backend
+                                  │
+                                  ▼
+                           React Frontend
+                                  │
+                                  ▼
+                        Personal Loan Prediction
+```
+
+---
+
+# 🚀 End-to-End Workflow
+
+```mermaid
+flowchart LR
+
+A[Customer Data]
+
+-->B[EDA]
+
+-->C[SMOTE]
+
+-->D[StandardScaler]
+
+-->E[PCA]
+
+-->F[Kernel SVM]
+
+-->G[Pickle]
+
+-->H[FastAPI]
+
+-->I[React]
+
+-->J[Prediction]
+```
+
+---
+
+# 📌 Repository Highlights
+
+✔ Custom implementation of Kernel Support Vector Machine
+
+✔ Manual implementation of SMOTE
+
+✔ StandardScaler integrated into prediction pipeline
+
+✔ PCA-based feature transformation
+
+✔ FastAPI REST API
+
+✔ React frontend
+
+✔ Interactive Swagger documentation
+
+✔ End-to-End Machine Learning deployment
+
+---
+
+---
+
+# 📊 Dataset Description
+
+This project utilizes the **Bank Personal Loan Modelling Dataset**, which contains demographic, financial, and banking service information from bank customers.
+
+The objective is to predict whether a customer will accept a personal loan offer based on their characteristics and financial profile.
+
+Unlike regression problems that estimate loan amounts, this project focuses on **binary classification**, where each customer is classified into one of two categories:
+
+- **0** → Customer does **not** accept the personal loan offer.
+- **1** → Customer **accepts** the personal loan offer.
+
+---
+
+## Dataset Source
+
+**Title**
 
 > Bank Personal Loan Modelling Dataset
 
-Source:
+**Provider**
 
-https://data.mendeley.com/datasets/tx2v248cx4/1
+Mendeley Data
 
-Dataset Characteristics
+**Task**
+
+Binary Classification
+
+---
+
+## Dataset Characteristics
 
 | Property | Value |
-|-----------|--------|
-| Samples | 5,000 |
-| Features | 12 |
-| Target | Personal Loan |
-| Task | Binary Classification |
-
-The dataset consists of demographic, financial, and banking service information collected from bank customers.
-
-The objective is to classify whether a customer will accept a personal loan offer.
+|-----------|-------|
+| Total Samples | 5,000 |
+| Total Features | 11 Predictor Variables |
+| Target Variable | Personal Loan |
+| Classification Type | Binary |
+| Missing Values | None |
+| Duplicate Values | None |
 
 ---
 
-# 📌 Original Dataset Distribution
+# 📋 Feature Description
 
-| Class | Count | Percentage |
-|--------|-------|------------|
-| Loan Rejected | 4520 | 90.4% |
-| Loan Accepted | 480 | 9.6% |
+The dataset contains demographic information, banking activities, and customer financial profiles.
 
-The dataset is highly imbalanced, making it difficult for standard classifiers to correctly identify the minority class.
+| Feature | Type | Description |
+|----------|------|-------------|
+| Age | Integer | Customer age in years. |
+| Experience | Integer | Years of professional work experience. Negative values indicate data inconsistencies present in the original dataset. |
+| Income | Numeric | Annual income measured in thousand US dollars. |
+| Family | Integer | Number of family members. |
+| CCAvg | Numeric | Average monthly credit card spending (thousand US dollars). |
+| Education | Categorical | Education level (1 = Undergraduate, 2 = Graduate, 3 = Advanced/Professional). |
+| Mortgage | Numeric | Mortgage value owned by the customer (thousand US dollars). |
+| Securities Account | Binary | Indicates whether the customer has a securities account. |
+| CD Account | Binary | Indicates whether the customer owns a Certificate of Deposit (CD) account. |
+| Online | Binary | Indicates whether the customer uses online banking services. |
+| CreditCard | Binary | Indicates whether the customer uses the bank-issued credit card. |
+| Personal Loan | Binary | Target variable (0 = Rejected, 1 = Accepted). |
 
-Therefore, SMOTE was employed before training the model.
+> **Note:** The `ID` and `ZIP Code` columns were excluded from the modeling process because they do not provide predictive information relevant to customer loan acceptance.
 
 ---
 
-# 📋 Dataset Features
+# 🎯 Target Variable
 
-| Feature | Description |
-|----------|-------------|
-| ID | Unique customer identifier |
-| Age | Customer age |
-| Experience | Years of professional work experience |
-| Income | Annual income (thousand USD) |
-| ZIP Code | Customer residential ZIP code |
-| Family | Number of family members |
-| CCAvg | Average monthly credit card spending (thousand USD) |
-| Education | Education level (1 = Undergraduate, 2 = Graduate, 3 = Advanced/Professional) |
-| Mortgage | Mortgage value (thousand USD) |
-| Securities Account | Whether the customer owns a securities account |
-| CD Account | Whether the customer owns a Certificate of Deposit account |
-| Online | Whether the customer uses online banking |
-| CreditCard | Whether the customer uses the bank's credit card |
-| Personal Loan | Target variable (0 = Rejected, 1 = Accepted) |
+The prediction target is **Personal Loan**.
+
+| Value | Meaning |
+|--------|---------|
+| 0 | Customer did not accept the personal loan offer |
+| 1 | Customer accepted the personal loan offer |
 
 ---
 
 # 📊 Sample Dataset
 
-| Age | Experience | Income | Family | CCAvg | Education | Mortgage | Loan |
-|------|------------|---------|---------|--------|------------|------------|------|
+Below is an example of customer records from the original dataset.
+
+| Age | Experience | Income | Family | CCAvg | Education | Mortgage | Personal Loan |
+|----:|-----------:|-------:|-------:|------:|----------:|----------:|--------------:|
 |25|1|49|4|1.6|1|0|0|
 |45|19|34|3|1.5|1|0|0|
 |39|15|11|1|1.0|1|0|0|
@@ -212,757 +492,457 @@ Therefore, SMOTE was employed before training the model.
 
 ---
 
-# 📈 Exploratory Data Analysis
+# 📈 Exploratory Data Analysis (EDA)
 
-The initial exploratory analysis revealed several important findings:
+Before developing the machine learning model, exploratory data analysis was conducted to understand the characteristics of the dataset.
 
-- The dataset contains 5,000 customer records.
-- Only 480 customers accepted the loan offer.
-- Income shows a significant difference between accepted and rejected classes.
-- Customers accepting loans tend to have higher monthly credit card spending.
-- Mortgage ownership also contributes to prediction performance.
-- Class imbalance is the major challenge for the classification task.
+The analysis focused on:
 
----
-
-# ⚙️ Data Preprocessing
-
-Before training the classification model, several preprocessing techniques were applied to improve data quality and model performance.
-
-## Preprocessing Workflow
-
-```mermaid
-flowchart LR
-
-A[Raw Dataset] --> B[Drop ID & ZIP Code]
-B --> C[Train-Test Split]
-C --> D[SMOTE]
-D --> E[StandardScaler]
-E --> F[PCA]
-F --> G[Kernel SVM RBF]
-```
-
-The preprocessing consists of:
-
-- Removing non-informative attributes (ID and ZIP Code).
-- Splitting the dataset into training and testing sets.
-- Handling class imbalance using SMOTE.
-- Standardizing numerical features with StandardScaler.
-- Reducing feature dimensions using Principal Component Analysis (PCA).
-- Training the classifier using Support Vector Machine with Radial Basis Function (RBF) Kernel.
+- Data distribution
+- Class imbalance
+- Feature statistics
+- Feature comparison between classes
+- Data quality inspection
 
 ---
 
-# ⚖️ Handling Imbalanced Dataset using SMOTE
+## Dataset Shape
 
-The original dataset exhibits a severe class imbalance.
+| Stage | Rows | Columns |
+|-------|-----:|--------:|
+| Original Dataset | 5000 | 14 |
+| After Feature Selection | 5000 | 12 |
 
-## Original Dataset
+The `ID` and `ZIP Code` attributes were removed prior to model training because they are identifiers rather than predictive variables.
 
-| Class | Samples | Percentage |
-|--------|---------|------------|
+---
+
+# ⚖️ Class Distribution
+
+One of the major challenges in this dataset is the imbalance between customers who accepted and rejected the personal loan offer.
+
+| Class | Count | Percentage |
+|--------|------:|-----------:|
 | Loan Rejected | 4520 | 90.4% |
 | Loan Accepted | 480 | 9.6% |
 
-Such an imbalance may cause the classifier to become biased toward the majority class.
+This imbalance may bias classification models toward predicting the majority class.
 
-To address this issue, **Synthetic Minority Oversampling Technique (SMOTE)** was applied.
+Therefore, balancing techniques are required before training.
+
+---
+
+# 📊 Descriptive Statistics
+
+The statistical summary reveals several important observations.
+
+| Feature | Mean |
+|----------|-----:|
+| Age | 45.34 |
+| Experience | 20.10 |
+| Income | 73.77 |
+| Family | 2.40 |
+| CCAvg | 1.94 |
+| Education | 1.88 |
+| Mortgage | 56.50 |
+
+The customer population generally consists of middle-aged individuals with approximately twenty years of work experience.
+
+---
+
+# 🔍 Feature Comparison by Loan Status
+
+Comparing the average feature values between customers who accepted and rejected the loan reveals several interesting patterns.
+
+| Feature | Rejected | Accepted |
+|----------|---------:|---------:|
+| Income | 66.24 | 144.75 |
+| CCAvg | 1.73 | 3.91 |
+| Mortgage | 51.79 | 100.85 |
+| Education | 1.84 | 2.23 |
+| Family | 2.37 | 2.61 |
+
+---
+
+## Insights
+
+Several observations can be drawn from the exploratory analysis:
+
+### 💰 Income
+
+Customers with higher annual income are considerably more likely to accept personal loan offers.
+
+---
+
+### 💳 Credit Card Spending
+
+Customers with higher average monthly credit card spending also exhibit a higher acceptance rate.
+
+---
+
+### 🏠 Mortgage
+
+Customers who own larger mortgages tend to have greater interest in personal loans.
+
+---
+
+### 🎓 Education
+
+Higher educational attainment appears to correlate with increased loan acceptance.
+
+---
+
+### 👨‍👩‍👧 Family Size
+
+Customers with slightly larger families are more likely to accept loan offers compared with those living alone.
+
+---
+
+# 📌 Summary of EDA
+
+The exploratory data analysis highlights two major findings:
+
+1. The dataset is highly imbalanced, requiring a balancing strategy before training.
+
+2. Financial-related variables such as **Income**, **CCAvg**, and **Mortgage** appear to have stronger relationships with personal loan acceptance than demographic attributes such as **Age**.
+
+These findings support the selection of preprocessing techniques applied in the following stage.
+
+---
+
+---
+
+# 🧠 Machine Learning Methodology
+
+This project implements a complete machine learning workflow, beginning with data preprocessing and ending with deployment as a REST API.
+
+Unlike many machine learning projects that rely entirely on built-in libraries, this project includes several custom implementations, including:
+
+- Manual SMOTE algorithm
+- Custom Kernel Support Vector Machine
+- Custom Pickle Loader (`KernelSVMUnpickler`)
+
+The complete pipeline is illustrated below.
+
+```mermaid
+flowchart TD
+
+A[Original Dataset]
+
+-->B[Feature Selection]
+
+-->C[Train-Test Split]
+
+-->D[Manual SMOTE]
+
+-->E[StandardScaler]
+
+-->F[PCA]
+
+-->G[Select PC1 & PC2]
+
+-->H[Custom Kernel SVM (RBF)]
+
+-->I[Model Evaluation]
+
+-->J[Pickle Serialization]
+
+-->K[FastAPI]
+
+-->L[React Frontend]
+```
+
+---
+
+# ⚖️ Handling Imbalanced Data using Manual SMOTE
+
+The original dataset contains a severe imbalance between customers who accepted and rejected the personal loan offer.
+
+| Class | Samples |
+|--------|--------:|
+| Loan Rejected | 4520 |
+| Loan Accepted | 480 |
+
+This imbalance can cause a classifier to become biased toward the majority class.
+
+Instead of using the `imblearn` implementation, this project applies a **custom implementation of the Synthetic Minority Oversampling Technique (SMOTE)** based on the **k-Nearest Neighbors** algorithm.
+
+---
+
+## Why SMOTE?
+
+SMOTE generates synthetic observations for the minority class by interpolating existing minority samples.
+
+Compared with simple oversampling, SMOTE:
+
+- Reduces overfitting.
+- Produces smoother decision boundaries.
+- Improves minority-class recognition.
+- Improves Recall.
+- Generates more representative synthetic samples.
 
 ---
 
 ## Dataset After SMOTE
 
 | Class | Samples |
-|--------|---------|
+|--------|--------:|
 | Loan Rejected | 4520 |
 | Loan Accepted | 4520 |
 
-The resulting dataset becomes perfectly balanced, enabling the classifier to learn representative decision boundaries for both classes.
+Total samples after balancing:
+
+**9040 observations**
 
 ---
 
-## Dataset Shape
+## Implementation Highlights
 
-| Stage | Shape |
-|--------|------------|
-| Original Dataset | (5000, 14) |
-| After SMOTE | (9040, 12) |
+Instead of using
 
----
+```python
+from imblearn.over_sampling import SMOTE
+```
 
-## Why SMOTE?
+this project implements SMOTE manually using:
 
-SMOTE generates synthetic minority-class samples instead of duplicating existing observations.
+- NearestNeighbors
+- Random interpolation
+- Synthetic sample generation
 
-Advantages include:
-
-- Reduces class imbalance.
-- Prevents classifier bias.
-- Improves Recall.
-- Produces better decision boundaries.
-- Reduces overfitting caused by simple oversampling.
+This approach provides greater understanding of how synthetic minority samples are generated.
 
 ---
 
-# 📊 Exploratory Data Analysis
+# 📏 Feature Scaling using StandardScaler
 
-Several interesting insights were observed during EDA.
+Support Vector Machine is a distance-based learning algorithm.
 
-## Customer Income
+Features with larger numerical ranges may dominate the optimization process if data are not standardized.
 
-Customers who accepted the loan generally have significantly higher annual income.
+Therefore, all numerical features are standardized using **StandardScaler** before applying Principal Component Analysis.
 
-| Class | Average Income |
-|--------|---------------:|
-| Rejected | 66.24 |
-| Accepted | 144.75 |
+The standardization process transforms each feature into zero mean and unit variance.
 
----
+Formula:
 
-## Credit Card Spending
+\[
+z=\frac{x-\mu}{\sigma}
+\]
 
-Customers with higher monthly credit card expenditure tend to accept loan offers more frequently.
+where
 
-| Class | Average CCAvg |
-|--------|--------------:|
-| Rejected | 1.73 |
-| Accepted | 3.91 |
+- x = original value
+- μ = feature mean
+- σ = feature standard deviation
 
 ---
 
-## Mortgage
+## Why StandardScaler?
 
-Mortgage ownership is another important indicator.
+Using StandardScaler provides several advantages:
 
-| Class | Average Mortgage |
-|--------|-----------------:|
-| Rejected | 51.79 |
-| Accepted | 100.85 |
-
----
-
-## Education
-
-Loan acceptance tends to increase among customers with higher educational backgrounds.
-
-| Class | Mean Education |
-|--------|---------------:|
-| Rejected | 1.84 |
-| Accepted | 2.23 |
+- Equal feature contribution
+- Faster optimization
+- Better numerical stability
+- Improved SVM performance
+- Better PCA projection
 
 ---
 
 # 📉 Principal Component Analysis (PCA)
 
-Principal Component Analysis (PCA) was applied to reduce dimensionality and visualize high-dimensional customer data.
+Principal Component Analysis (PCA) is used to transform the standardized feature space into a lower-dimensional representation.
 
-PCA transforms correlated variables into a smaller number of principal components while preserving as much variance as possible.
+In this project:
+
+- Original feature space → PCA
+- Three principal components are generated
+- Only the first two principal components are used during SVM training.
 
 ---
 
-## PCA Visualization (45° View)
-
-> 📷 Replace with:
+## PCA Pipeline
 
 ```text
-docs/images/pca-45.png
-```
+Original Features
 
-![PCA 45](docs/images/pca-45.png)
+↓
 
----
+StandardScaler
 
-## PCA Visualization (135° View)
+↓
 
-> 📷 Replace with:
+PCA (3 Components)
 
-```text
-docs/images/pca-135.png
-```
+↓
 
-![PCA 135](docs/images/pca-135.png)
+PC1
 
----
+PC2
 
-### Observation
+↓
 
-The PCA visualization demonstrates that the two classes become more distinguishable after preprocessing.
-
-Although some overlap remains, distinct clusters begin to emerge, supporting the effectiveness of the preprocessing pipeline.
-
----
-
-# 🤖 Machine Learning Pipeline
-
-```mermaid
-flowchart TD
-
-A[Dataset]
--->B[EDA]
-
-B-->C[Train-Test Split]
-
-C-->D[SMOTE]
-
-D-->E[StandardScaler]
-
-E-->F[PCA]
-
-F-->G[Kernel SVM RBF]
-
-G-->H[Evaluation]
-
-H-->I[Pickle Model]
-
-I-->J[FastAPI]
-
-J-->K[React]
+Kernel SVM
 ```
 
 ---
 
-# 🧠 Support Vector Machine (Kernel RBF)
+## Why PCA?
 
-The classifier used in this project is **Support Vector Machine (SVM)** with the **Radial Basis Function (RBF)** kernel.
+Applying PCA provides several advantages:
 
-The RBF kernel is capable of learning highly non-linear relationships between customer attributes and loan acceptance.
-
-Unlike linear classifiers, the RBF kernel projects data into a higher-dimensional feature space, enabling more flexible decision boundaries.
-
-Advantages include:
-
-- Excellent performance on non-linear problems.
-- Robust generalization.
-- Effective in high-dimensional spaces.
-- Strong classification capability with appropriate hyperparameters.
+- Reduces dimensionality
+- Removes redundant information
+- Improves visualization
+- Accelerates model training
+- Reduces computational complexity
 
 ---
 
-# 📈 Model Evaluation
+## PCA Visualization
 
-The trained model was evaluated using multiple classification metrics.
+### Before SMOTE
 
-| Metric | Score |
-|----------|-------:|
-| Accuracy | **84.51%** |
-| Precision | **81.79%** |
-| Recall | **88.84%** |
-| F1-Score | **85.17%** |
+Replace with:
 
-The model demonstrates balanced performance across all evaluation metrics.
-
-A particularly high Recall indicates that the classifier successfully identifies most customers who are likely to accept the personal loan offer.
-
----
-
-# 📋 Confusion Matrix
-
-| | Predicted Reject | Predicted Accept |
-|----------------|---------------:|---------------:|
-| Actual Reject | **724** | **179** |
-| Actual Accept | **101** | **804** |
-
-Summary
-
-- True Positive : **804**
-- True Negative : **724**
-- False Positive : **179**
-- False Negative : **101**
-
----
-
-## Evaluation Analysis
-
-The model achieves a good trade-off between Precision and Recall.
-
-High Recall is especially beneficial in banking marketing campaigns because it minimizes the number of potential customers who are incorrectly classified as not interested.
-
-This allows banks to target a larger proportion of customers who are genuinely likely to accept a personal loan offer.
-
----
-
-# 🌊 Decision Boundary Visualization
-
-The figure below illustrates the non-linear decision boundary learned by the Support Vector Machine with the RBF kernel.
-
-> 📷 Replace with:
-
-```text
-docs/images/decision-boundary.png
 ```
-
-![Decision Boundary](docs/images/decision-boundary.png)
-
----
-
-### Interpretation
-
-The RBF kernel successfully captures complex non-linear relationships among customer attributes.
-
-Unlike linear classifiers, the generated decision boundary follows the natural distribution of the data, resulting in improved classification performance.
-
-This demonstrates the ability of the model to separate customers who are likely to accept personal loan offers from those who are not.
-
----
-
-# 🌐 Web Application
-
-The machine learning model has been successfully deployed as a RESTful API using **FastAPI** and integrated into a modern web interface built with **React**.
-
-The application enables users to input customer information and instantly receive loan acceptance predictions.
-
----
-
-## ✨ Features
-
-- 🧠 Machine Learning Prediction
-- ⚡ FastAPI REST API
-- 💻 Modern React User Interface
-- 📱 Responsive Design
-- 🔄 Real-Time Prediction
-- 📊 Instant Classification Result
-- 🚀 Pickle Model Deployment
-- 📖 Interactive Swagger Documentation
-
----
-
-# 🖥 Application Interface
-
-## 🏠 Homepage
-
-> Replace with:
-
-```text
-docs/images/homepage.png
-```
-
-![Homepage](docs/images/homepage.png)
-
-The homepage introduces the application and provides users with a simple interface for navigating to the prediction page.
-
----
-
-## 📝 Customer Prediction Form
-
-> Replace with:
-
-```text
-docs/images/prediction-form.png
-```
-
-![Prediction Form](docs/images/prediction-form.png)
-
-Users are required to provide customer information including:
-
-- Age
-- Work Experience
-- Annual Income
-- Family Size
-- Average Credit Card Spending
-- Education
-- Mortgage
-- Securities Account
-- CD Account
-- Online Banking
-- Credit Card Ownership
-
-The application validates the input before sending the request to the backend.
-
----
-
-## ✅ Accepted Loan Prediction
-
-> Replace with:
-
-```text
-docs/images/prediction-accepted.png
-```
-
-![Accepted](docs/images/prediction-accepted.png)
-
-If the customer is predicted to accept the loan offer, the system returns a positive prediction.
-
----
-
-## ❌ Rejected Loan Prediction
-
-> Replace with:
-
-```text
-docs/images/prediction-rejected.png
-```
-
-![Rejected](docs/images/prediction-rejected.png)
-
-If the customer is predicted not to accept the loan offer, the application displays a rejection prediction.
-
----
-
-# ⚙ Backend Architecture
-
-The backend is implemented using **FastAPI**.
-
-Responsibilities include:
-
-- Loading trained SVM model (.pkl)
-- Receiving HTTP requests
-- Input validation
-- Running prediction
-- Returning JSON response
-- Supporting Swagger UI documentation
-
----
-
-## Backend Workflow
-
-```mermaid
-sequenceDiagram
-
-participant User
-participant React
-participant FastAPI
-participant SVM Model
-
-User->>React: Fill Customer Information
-
-React->>FastAPI: POST /predict
-
-FastAPI->>SVM Model: Predict()
-
-SVM Model-->>FastAPI: Prediction
-
-FastAPI-->>React: JSON Response
-
-React-->>User: Display Prediction
+docs/images/pca-before-smote.png
 ```
 
 ---
 
-# 🔗 REST API
+### After SMOTE
 
-## Endpoint
+Replace with:
 
-```http
-POST /predict
 ```
+docs/images/pca-after-smote.png
+```
+
+The visualization demonstrates a more balanced class distribution after applying the manually implemented SMOTE algorithm.
 
 ---
 
-## Request Body
+# 🧠 Custom Kernel Support Vector Machine
 
-```json
-{
-  "Age": 35,
-  "Experience": 10,
-  "Income": 90,
-  "Family": 3,
-  "CCAvg": 2.5,
-  "Education": 2,
-  "Mortgage": 100,
-  "SecuritiesAccount": 0,
-  "CDAccount": 1,
-  "Online": 1,
-  "CreditCard": 1
-}
-```
+The classification model is implemented manually rather than using Scikit-Learn's `SVC`.
+
+The project defines its own `KernelSVM` class that includes:
+
+- Linear Kernel
+- Polynomial Kernel
+- Radial Basis Function (RBF) Kernel
+- Decision Function
+- Prediction Function
+- Training using the dual optimization formulation
+
+This implementation provides a deeper understanding of the underlying mathematics of Support Vector Machines.
 
 ---
 
-## Success Response
+## Supported Kernels
 
-```json
-{
-  "prediction": 1,
-  "label": "Accepted"
-}
-```
+| Kernel | Status |
+|----------|--------|
+| Linear | ✅ |
+| Polynomial | ✅ |
+| RBF | ✅ |
 
----
-
-## HTTP Status
-
-| Status | Description |
-|---------|-------------|
-| 200 | Prediction Success |
-| 422 | Validation Error |
-| 500 | Internal Server Error |
+The deployed model uses the **Radial Basis Function (RBF)** kernel because it demonstrated the best classification performance.
 
 ---
 
-# 📖 Swagger Documentation
+# 🌊 Radial Basis Function (RBF)
 
-FastAPI automatically generates interactive API documentation.
+The RBF kernel maps samples into a higher-dimensional feature space, enabling the classifier to learn complex nonlinear relationships.
 
-> Replace with:
+Kernel equation:
 
-```text
-docs/images/swagger.png
-```
+\[
+K(x_i,x_j)=\exp(-\gamma ||x_i-x_j||^2)
+\]
 
-![Swagger](docs/images/swagger.png)
+Advantages:
 
-Swagger enables developers to test every endpoint directly from the browser without external tools.
-
-Default URL
-
-```text
-http://127.0.0.1:8000/docs
-```
+- Handles nonlinear data
+- Flexible decision boundaries
+- High classification capability
+- Robust generalization
 
 ---
 
-# 📸 Proof of Concept
+# ⚙️ Model Training Pipeline
 
-This section demonstrates the complete workflow of the application.
+The training process consists of the following stages.
 
 ```mermaid
 flowchart LR
 
-A[Homepage]
+Dataset
 
--->B[Input Customer Data]
+-->TrainTestSplit
 
--->C[Click Predict]
+-->SMOTE
 
--->D[FastAPI]
+-->StandardScaler
 
--->E[SVM RBF Model]
+-->PCA
 
--->F[Prediction Result]
+-->KernelSVM
+
+-->Evaluation
+
+-->Pickle
 ```
 
 ---
 
-## Step 1 — Homepage
+# 💾 Model Serialization
 
-📷
+After training, all preprocessing objects and the trained classifier are serialized into a Pickle file.
+
+The serialized artifact contains:
+
+- Feature order
+- StandardScaler
+- PCA
+- Kernel SVM model
+
+This enables the deployment pipeline to reproduce the exact preprocessing steps used during training.
+
+---
+
+# 🔄 Custom KernelSVMUnpickler
+
+One unique aspect of this project is the implementation of a custom Pickle loader.
+
+Because the trained model was serialized from a notebook environment, a custom unpickler is required to correctly reconstruct the `KernelSVM` class during deployment.
+
+This ensures compatibility between the notebook training environment and the FastAPI production environment.
+
+Workflow:
 
 ```text
-docs/images/homepage.png
+Notebook
+
+↓
+
+KernelSVM
+
+↓
+
+Pickle
+
+↓
+
+KernelSVMUnpickler
+
+↓
+
+FastAPI
 ```
 
-Description:
-
-Landing page of the application.
+This approach allows the trained custom machine learning model to be loaded without modifying the original Pickle artifact.
 
 ---
-
-## Step 2 — Fill Customer Information
-
-📷
-
-```text
-docs/images/prediction-form.png
-```
-
-Description:
-
-Users provide customer attributes required for prediction.
-
----
-
-## Step 3 — API Request
-
-📷
-
-```text
-docs/images/swagger.png
-```
-
-Description:
-
-FastAPI receives prediction request.
-
----
-
-## Step 4 — Machine Learning Prediction
-
-📷
-
-```text
-docs/images/decision-boundary.png
-```
-
-Description:
-
-The trained Kernel SVM model performs binary classification.
-
----
-
-## Step 5 — Display Prediction
-
-📷
-
-```text
-docs/images/prediction-accepted.png
-```
-
-or
-
-```text
-docs/images/prediction-rejected.png
-```
-
-Description:
-
-The frontend displays the prediction result returned by the backend.
-
----
-
-# 📂 Project Structure
-
-```text
-Bank-Personal-Loan-Prediction
-│
-├── dataset
-│   ├── bank_personal_loan_data.csv
-│   └── ...
-│
-├── frontend
-│   └── Bank-Personal-Loan-Prediction
-│
-├── docs
-│   └── images
-│
-├── main.py
-├── svm_rbf_bank_loan_model.pkl
-├── requirements.txt
-│
-├── SMOTE.ipynb
-├── SVM.ipynb
-├── data_statistic.ipynb
-│
-└── README.md
-```
-
----
-
-# ⚙ Installation
-
-## Clone Repository
-
-```bash
-git clone https://github.com/USERNAME/Bank-Personal-Loan-Prediction.git
-```
-
----
-
-## Backend
-
-```bash
-cd Bank-Personal-Loan-Prediction
-
-python -m venv .venv
-
-source .venv/Scripts/activate
-```
-
-Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-Run FastAPI
-
-```bash
-uvicorn main:app --reload
-```
-
-Backend URL
-
-```text
-http://127.0.0.1:8000
-```
-
-Swagger
-
-```text
-http://127.0.0.1:8000/docs
-```
-
----
-
-## Frontend
-
-```bash
-cd frontend/Bank-Personal-Loan-Prediction
-
-npm install
-
-npm run dev
-```
-
-Default URL
-
-```text
-http://localhost:5173
-```
-
----
-
-# 🚀 Future Improvements
-
-Several enhancements can further improve the project.
-
-- Docker Deployment
-- Cloud Deployment
-- CI/CD Pipeline
-- User Authentication
-- Database Integration
-- Model Monitoring
-- Explainable AI (SHAP / LIME)
-- Hyperparameter Optimization
-- Automated Retraining
-- Logging & Analytics
-- Unit Testing
-- Integration Testing
-
----
-
-# 👨‍💻 Author
-
-**Fachrizal Fazza Ashari**
-
-Backend Developer | Machine Learning Enthusiast
-
-- 🎓 Information Systems Graduate
-- 💼 Interested in Backend Engineering & Artificial Intelligence
-
-GitHub
-
-```
-https://github.com/Nilfgard13
-```
-
-LinkedIn
-
-```
-https://www.linkedin.com/in/fachrizal-fazza-ashari
-```
-
----
-
-# ⭐ Support
-
-If you find this project useful, please consider giving it a ⭐ on GitHub.
-
-It helps others discover the project and motivates future improvements.
-
----
-
-# 📄 License
-
-This project is licensed under the **MIT License**.
-
-Feel free to use, modify, and distribute this project for educational and research purposes.
-
----
-
-<div align="center">
-
-### ⭐ Thank you for visiting this repository ⭐
-
-Built with ❤️ using Python, FastAPI, React, and Machine Learning.
-
-</div>
